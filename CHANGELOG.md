@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [3.19.2-bb.1] - 2026-01-09
+
+### Changed
+
+- Fixed issue with cypress test running locally.
+- Updated gluon 0.9.7 -> 0.9.8
+- Updated anchore-health-spec.cy.js to replace `Cypress.env()` with `cy.env()` for Cypress 15.10.0 compatibility.
+
 ## [3.19.2-bb.0] - 2026-01-09
 
 ### Changed

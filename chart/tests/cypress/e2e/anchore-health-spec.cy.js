@@ -1,11 +1,13 @@
 describe('Anchore Login', () => {
   it('Admin should be able to login', () => {
-    // Visit login page
-    cy.visit(Cypress.env('url'))
-    // login as admin
-    cy.get('input[name="username"]').type(Cypress.env('user'))
-    cy.get('input[name="password"]').type(Cypress.env('password'))
-    cy.get('button[id="anchore-login-form-submit"]').click()
+    // Visit login page and login as Admin
+    cy.env(['url', 'user', 'password']).then(({ url, user, password }) => {
+      cy.visit(url)
+      cy.get('input[name="username"]').type(`${user}`)
+      cy.get('input[name="password"]').type(`${password}`)
+      cy.get('button[id="anchore-login-form-submit"]').click()
+    })
+
     cy.wait(3000); // wait for the dashboard to load
     cy.get('body').then($body => {
       if ($body.find('h2:contains("Welcome to Anchore!")').length > 0) {

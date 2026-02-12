@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # anchore-enterprise
 
-![Version: 3.19.2-bb.0](https://img.shields.io/badge/Version-3.19.2--bb.0-informational?style=flat-square) ![AppVersion: 5.23.0](https://img.shields.io/badge/AppVersion-5.23.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.19.2-bb.1](https://img.shields.io/badge/Version-3.19.2--bb.1-informational?style=flat-square) ![AppVersion: 5.23.0](https://img.shields.io/badge/AppVersion-5.23.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Anchore Enterprise is a complete container security workflow solution for professional teams. Easily integrating with CI/CD systems,
 it allows developers to bolster security without compromising velocity and enables security teams to audit and verify compliance in real-time.
@@ -97,7 +97,7 @@ helm install anchore-enterprise chart/
 | monitoring.serviceMonitor.tlsConfig | object | `{}` |  |
 | bbtests.enabled | bool | `false` |  |
 | bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/anchore/cli/cli:0.9.4"` |  |
-| bbtests.scripts.envs.ANCHORE_CLI_URL | string | `"http://{{ include \"enterprise.api.fullname\" . }}:{{ .Values.api.service.port }}/v2"` |  |
+| bbtests.scripts.envs.ANCHORE_CLI_URL | string | `"http://{{ include \"enterprise.api.fullname\" . }}:{{ .Values.upstream.api.service.port }}/v2"` |  |
 | bbtests.scripts.envs.ANCHORE_CLI_USER | string | `"admin"` |  |
 | bbtests.scripts.envs.ANCHORE_SCAN_IMAGE | string | `"quay.io/prometheus/node-exporter:latest"` |  |
 | bbtests.scripts.secretEnvs[0].name | string | `"ANCHORE_CLI_PASS"` |  |
@@ -108,7 +108,7 @@ helm install anchore-enterprise chart/
 | bbtests.cypress.resources.limits.cpu | string | `"2"` |  |
 | bbtests.cypress.resources.limits.memory | string | `"4Gi"` |  |
 | bbtests.cypress.artifacts | bool | `true` |  |
-| bbtests.cypress.envs.cypress_url | string | `"http://{{ include \"enterprise.ui.fullname\" . }}:{{ .Values.ui.service.port }}"` |  |
+| bbtests.cypress.envs.cypress_url | string | `"http://{{ include \"enterprise.ui.fullname\" . }}:{{ .Values.upstream.ui.service.port }}"` |  |
 | bbtests.cypress.envs.cypress_user | string | `"admin"` |  |
 | bbtests.cypress.envs.cypress_registry | string | `"docker.io"` |  |
 | bbtests.cypress.envs.cypress_repository | string | `"anchore/grype"` |  |
@@ -147,7 +147,7 @@ helm install anchore-enterprise chart/
 | postgresql.primary.service.ports.postgresql | int | `5432` |  |
 | postgresql.image.registry | string | `"registry1.dso.mil"` |  |
 | postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql"` |  |
-| postgresql.image.tag | string | `"18.1"` |  |
+| postgresql.image.tag | string | `"16.2"` |  |
 | postgresql.global.imagePullSecrets[0] | string | `"private-registry"` |  |
 | postgresql.postgresqlConfiguration.listen_addresses | string | `"*"` |  |
 | postgresql.pgHbaConfiguration | string | `"local all all scram-sha-256\nhost all all all scram-sha-256"` |  |
