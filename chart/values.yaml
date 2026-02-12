@@ -128,7 +128,7 @@ bbtests:
   scripts:
     image: registry1.dso.mil/ironbank/anchore/cli/cli:0.9.4
     envs:
-      ANCHORE_CLI_URL: "http://{{ include \"enterprise.api.fullname\" . }}:{{ .Values.api.service.port }}/v2"
+      ANCHORE_CLI_URL: "http://{{ include \"enterprise.api.fullname\" . }}:{{ .Values.upstream.api.service.port }}/v2"
       ANCHORE_CLI_USER: admin
       ANCHORE_SCAN_IMAGE: quay.io/prometheus/node-exporter:latest
     secretEnvs:
@@ -147,7 +147,7 @@ bbtests:
         memory: "4Gi"
     artifacts: true
     envs:
-      cypress_url: "http://{{ include \"enterprise.ui.fullname\" . }}:{{ .Values.ui.service.port }}"
+      cypress_url: "http://{{ include \"enterprise.ui.fullname\" . }}:{{ .Values.upstream.ui.service.port }}"
       cypress_user: admin
       cypress_registry: docker.io
       cypress_repository: anchore/grype
@@ -260,6 +260,8 @@ upstream:
   ## @section Anchore API k8s Deployment Parameters
   #################################################
   api:
+    service:
+      port: 8228
     resources:
       limits:
         cpu: 1
