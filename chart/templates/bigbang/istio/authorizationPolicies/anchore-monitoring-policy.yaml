@@ -1,0 +1,21 @@
+{{- if and .Values.istio.enabled .Values.istio.hardened.enabled }}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: anchore-monitoring-policy
+  namespace: {{ .Release.Namespace }}
+spec:
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        ports:
+        - "8228"  # external-api
+        - "8082"  # catalog
+        - "8087"  # policy
+        - "8083"  # simplequeue
+        - "8084"  # analyzer
+        - "8088"  # feeds
+        - "8558"  # reports
+        - "8668"  # notifications
+{{- end }}
