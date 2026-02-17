@@ -249,6 +249,9 @@ upstream:
 
   # Input exclusions in the arrays below:
   anchoreConfig:
+    metrics:    
+      enabled: true
+      auth_disabled: false
     policy_engine:
       vulnerabilities:
         matching:
@@ -463,3 +466,4 @@ ensureDbJobs:
     requests:
       cpu: 2
       memory: 2G
+

@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [3.19.2-bb.2] - 2026-02-17
+
+### Changed
+
+- Fixed issue with prometheus servicemonitor
+
 ## [3.19.2-bb.1] - 2026-01-09
 
 ### Changed

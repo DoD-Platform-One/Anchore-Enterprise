@@ -1,15 +1,18 @@
-{{ if .Values.monitoring.enabled -}}
+{{- if .Values.monitoring.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
+  name: {{ include "enterprise.fullname" . }}-service-monitor
+  namespace: {{ .Release.Namespace }}
   labels:
     prometheus: k8s
-  name: anchore-service-monitor
-  namespace: {{ .Release.Namespace }}
+    app.kubernetes.io/name: {{ include "enterprise.fullname" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
   selector:
     matchLabels:
-      app: {{ template "enterprise.fullname" . }}
+      app.kubernetes.io/name: {{ include "enterprise.fullname" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   namespaceSelector:
     matchNames:
       - {{ .Release.Namespace }}
@@ -19,58 +22,55 @@ spec:
       params:
         format:
           - prometheus
-      port: anchore-external-api
+      port: api
       {{- if .Values.monitoring.serviceMonitor.scheme }}
       scheme: {{ .Values.monitoring.serviceMonitor.scheme }}
       {{- end }}
       {{- if .Values.monitoring.serviceMonitor.tlsConfig }}
       tlsConfig:
-        {{- toYaml .Values.monitoring.serviceMonitor.tlsConfig | nindent 8 }}
+{{ toYaml .Values.monitoring.serviceMonitor.tlsConfig | indent 8 }}
       {{- end }}
-      #jobLabel: anchore-metrics-external-api
 
     - interval: 30s
       path: /metrics
       params:
         format:
           - prometheus
-      port: anchore-catalog-api
+      port: catalog
       {{- if .Values.monitoring.serviceMonitor.scheme }}
       scheme: {{ .Values.monitoring.serviceMonitor.scheme }}
       {{- end }}
       {{- if .Values.monitoring.serviceMonitor.tlsConfig }}
       tlsConfig:
-        {{- toYaml .Values.monitoring.serviceMonitor.tlsConfig | nindent 8 }}
+{{ toYaml .Values.monitoring.serviceMonitor.tlsConfig | indent 8 }}
       {{- end }}
-      #jobLabel: anchore-metrics-catalog-api
 
     - interval: 30s
       path: /metrics
       params:
         format:
           - prometheus
-      port: anchore-policy-api
+      port: policyengine
       {{- if .Values.monitoring.serviceMonitor.scheme }}
       scheme: {{ .Values.monitoring.serviceMonitor.scheme }}
       {{- end }}
       {{- if .Values.monitoring.serviceMonitor.tlsConfig }}
       tlsConfig:
-        {{- toYaml .Values.monitoring.serviceMonitor.tlsConfig | nindent 8 }}
+{{ toYaml .Values.monitoring.serviceMonitor.tlsConfig | indent 8 }}
       {{- end }}
-      #jobLabel: anchore-metrics-policy-api
 
     - interval: 30s
       path: /metrics
       params:
         format:
           - prometheus
-      port: anchore-simplequeue-api
+      port: simplequeue
       {{- if .Values.monitoring.serviceMonitor.scheme }}
       scheme: {{ .Values.monitoring.serviceMonitor.scheme }}
       {{- end }}
       {{- if .Values.monitoring.serviceMonitor.tlsConfig }}
       tlsConfig:
-        {{- toYaml .Values.monitoring.serviceMonitor.tlsConfig | nindent 8 }}
+{{ toYaml .Values.monitoring.serviceMonitor.tlsConfig | indent 8 }}
       {{- end }}
       #jobLabel: anchore-metrics-simplequeue-api
 
@@ -89,7 +89,7 @@ spec:
         {{- toYaml .Values.monitoring.serviceMonitor.tlsConfig | nindent 8 }}
       {{- end }}
       #jobLabel: anchore-metrics-feeds-api
-    {{- end }}
+    {{- end }}    
 
     {{- if .Values.upstream.reports.enabled }}
     - interval: 30s
@@ -103,9 +103,8 @@ spec:
       {{- end }}
       {{- if .Values.monitoring.serviceMonitor.tlsConfig }}
       tlsConfig:
-        {{- toYaml .Values.monitoring.serviceMonitor.tlsConfig | nindent 8 }}
+{{ toYaml .Values.monitoring.serviceMonitor.tlsConfig | indent 8 }}
       {{- end }}
-      #jobLabel: anchore-metrics-enterprise-reports
     {{- end }}
 
     {{- if .Values.upstream.notifications.enabled }}
@@ -114,30 +113,27 @@ spec:
       params:
         format:
           - prometheus
-      port: notify
+      port: notifications
       {{- if .Values.monitoring.serviceMonitor.scheme }}
       scheme: {{ .Values.monitoring.serviceMonitor.scheme }}
       {{- end }}
       {{- if .Values.monitoring.serviceMonitor.tlsConfig }}
       tlsConfig:
-        {{- toYaml .Values.monitoring.serviceMonitor.tlsConfig | nindent 8 }}
+{{ toYaml .Values.monitoring.serviceMonitor.tlsConfig | indent 8 }}
       {{- end }}
-      #jobLabel: anchore-metrics-enterprise-notifications
     {{- end }}
 
-    ## Big Bang replaced PodMonitor with this ServiceMonitor endpoint
     - interval: 30s
       path: /metrics
       params:
         format:
           - prometheus
-      port: analyzer-api
+      port: analyzer
       {{- if .Values.monitoring.serviceMonitor.scheme }}
       scheme: {{ .Values.monitoring.serviceMonitor.scheme }}
       {{- end }}
       {{- if .Values.monitoring.serviceMonitor.tlsConfig }}
       tlsConfig:
-        {{- toYaml .Values.monitoring.serviceMonitor.tlsConfig | nindent 8 }}
+{{ toYaml .Values.monitoring.serviceMonitor.tlsConfig | indent 8 }}
       {{- end }}
-      #jobLabel: anchore-anchor-analyzer-metrics-mtls
 {{- end }}
