@@ -182,7 +182,7 @@ upstream:
   ui-redis:
     chartEnabled: false
 
-  image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.23.0
+  image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.24.0
   imagePullSecretName: private-registry
   kubectlImage: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34
   migrationPodImage: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.1
@@ -308,7 +308,7 @@ upstream:
   #################################
   ui:
     enabled: true
-    image: registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui:5.23.0
+    image: registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui:5.24.0
     imagePullSecretName: private-registry
     service:
       port: 3000
@@ -395,7 +395,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql
-    tag: "16.2"
+    tag: "18.1"
   global:
     imagePullSecrets:
       - private-registry
