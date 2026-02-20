@@ -2,8 +2,6 @@
   "baseBranches": [
     "main"
   ],
-  "dependencyDashboard": true,
-  "dependencyDashboardTitle": "Renovate: Upgrade Anchore Enterprise Package Dependencies",
   "draftPR": true,
   "labels": [
     "anchore",
@@ -16,7 +14,8 @@
     {
       "matchDatasources": [
         "docker",
-        "git-tags"
+        "git-tags",
+        "helm"
       ],
       "groupName": "Anchore"
     }
@@ -25,37 +24,22 @@
   "postUpdateOptions": [
     "helmUpdateSubChartArchives"
   ],
-  "ignoreDeps": [
-    "docker.io/bitnami/redis-sentinel",
-    "docker.io/bitnami/redis-sentinel-exporter",
-    "docker.io/bitnami/bitnami-shell",
-    "gcr.io/cloudsql-docker/gce-proxy"
-  ],
   "ignorePaths": [
-    "chart/deps/postgresql/**",
-    "chart/deps/redis/**"
+    "chart/deps/postgresql/**"
   ],
   "customManagers": [
     {
       "customType": "regex",
       "description": "Update upstream anchore-enterprise chart version",
-      "fileMatch": ["^chart/Chart\\.yaml$"],
-      "matchStrings": ["version:\\s+(?<currentValue>.+)-bb\\.\\d+"],
+      "managerFilePatterns": [
+        "/^chart/Chart\\.yaml$/"
+      ],
+      "matchStrings": [
+        "version:\\s+(?<currentValue>.+)-bb\\.\\d+"
+      ],
       "depNameTemplate": "enterprise",
       "datasourceTemplate": "helm",
       "registryUrlTemplate": "https://charts.anchore.io"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^chart/values\\.yaml$"
-      ],
-      "matchStrings": [
-        "image:\\s+registry1.dso.mil/ironbank/anchore/engine/engine:(?<currentValue>.+)"
-      ],
-      "depNameTemplate": "ironbank/anchore/engine/engine",
-      "datasourceTemplate": "docker",
-      "registryUrlTemplate": "https://registry1.dso.mil"
     },
     {
       "customType": "regex",
@@ -113,18 +97,6 @@
       ],
       "matchStrings": [
         "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)"
-      ],
-      "registryUrlTemplate": "https://registry1.dso.mil",
-      "depNameTemplate": "ironbank/anchore/engine/engine",
-      "datasourceTemplate": "docker"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^chart/Chart\\.yaml$/"
-      ],
-      "matchStrings": [
-        "- Engine:\\s+(?<currentValue>.+)"
       ],
       "registryUrlTemplate": "https://registry1.dso.mil",
       "depNameTemplate": "ironbank/anchore/engine/engine",
