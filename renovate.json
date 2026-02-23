@@ -2,12 +2,15 @@
   "baseBranches": [
     "main"
   ],
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Renovate: Update Anchore Enterprise Dependencies",
   "draftPR": true,
   "labels": [
     "anchore",
     "renovate",
     "kind::maintenance",
-    "priority::1"
+    "priority::1",
+    "team::Empire"
   ],
   "packageRules": [
     {
@@ -16,7 +19,7 @@
         "git-tags",
         "helm"
       ],
-      "groupName": "Anchore"
+      "groupName": "Anchore Enterprise Dependencies"
     }
   ],
   "separateMajorMinor": false,
@@ -48,7 +51,7 @@
       "matchStrings": [
         "image:\\s+registry1.dso.mil/ironbank/anchore/enterprise/enterprise:(?<currentValue>.+)"
       ],
-      "depNameTemplate": "ironbank/anchore/enterprise/enterprise",
+      "depNameTemplate": "registry1.dso.mil/ironbank/anchore/enterprise/enterprise",
       "datasourceTemplate": "docker",
       "registryUrlTemplate": "https://registry1.dso.mil"
     },
@@ -60,7 +63,7 @@
       "matchStrings": [
         "image:\\s+registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui:(?<currentValue>.+)"
       ],
-      "depNameTemplate": "ironbank/anchore/enterpriseui/enterpriseui",
+      "depNameTemplate": "registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui",
       "datasourceTemplate": "docker",
       "registryUrlTemplate": "https://registry1.dso.mil"
     },
@@ -70,7 +73,7 @@
         "/^chart/values\\.yaml$/"
       ],
       "matchStrings": [
-        "image:\\s+registry1.dso.mil/ironbank/opensource/postgres/*:(?<currentValue>.+)"
+        "image:\\s+registry1.dso.mil/ironbank/opensource/postgres/[^:]+:(?<currentValue>.+)"
       ],
       "depNameTemplate": "ironbank/opensource/postgres",
       "datasourceTemplate": "docker",
@@ -82,23 +85,10 @@
         "/^chart/Chart\\.yaml$/"
       ],
       "matchStrings": [
-        "redis\\s*\\n\\s*version:\\s*(?<currentValue>.+)"
-      ],
-      "depNameTemplate": "redis",
-      "datasourceTemplate": "git-tags",
-      "packageNameTemplate": "https://repo1.dso.mil/big-bang/product/maintained/redis",
-      "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^chart/Chart\\.yaml$/"
-      ],
-      "matchStrings": [
         "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)"
       ],
       "registryUrlTemplate": "https://registry1.dso.mil",
-      "depNameTemplate": "ironbank/anchore/engine/engine",
+      "depNameTemplate": "registry1.dso.mil/ironbank/anchore/enterprise/enterprise",
       "datasourceTemplate": "docker"
     },
     {
@@ -110,7 +100,7 @@
         "- Enterprise:\\s+(?<currentValue>.+)"
       ],
       "registryUrlTemplate": "https://registry1.dso.mil",
-      "depNameTemplate": "ironbank/anchore/enterprise/enterprise",
+      "depNameTemplate": "registry1.dso.mil/ironbank/anchore/enterprise/enterprise",
       "datasourceTemplate": "docker"
     },
     {
@@ -129,9 +119,21 @@
         "/^tests/images\\.txt$/"
       ],
       "matchStrings": [
-        "s*(?<depName>.+):(?<currentValue>.+)"
+        "\\s*(?<depName>.+):(?<currentValue>.+)"
       ],
       "datasourceTemplate": "docker"
     }
-  ]
+  ],
+  "postUpgradeTasks": {
+    "commands": [
+      "bump-chart-yaml",
+      "bump-changelog '{{#each upgrades}}- {{depName}} {{currentVersion}} -> {{newVersion}}\\n{{/each}}'",
+      "regenerate-helm-docs"
+    ],
+    "fileFilters": [
+      "chart/Chart.yaml",
+      "README.md",
+      "CHANGELOG.md"
+    ]
+  }
 }
