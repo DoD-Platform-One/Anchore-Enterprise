@@ -33,6 +33,15 @@
         ],
         "executionMode": "branch"
       }
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "registry1.dso.mil/bigbang/maintained/redis"
+      ],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
     }
   ],
   "separateMajorMinor": false,
@@ -50,7 +59,7 @@
         "/^chart/Chart\\.yaml$/"
       ],
       "matchStrings": [
-        "version:\\s+(?<currentValue>.+)-bb\\.\\d+"
+        "^version:\\s+(?<currentValue>.+)-bb\\.\\d+"
       ],
       "autoReplaceStringTemplate": "version: {{{newValue}}}-bb.0",
       "depNameTemplate": "enterprise",
