@@ -12,6 +12,10 @@
     "priority::1",
     "team::Empire"
   ],
+  "enabledManagers": [
+    "custom.regex",
+    "helmv3"
+  ],
   "packageRules": [
     {
       "matchDatasources": [
@@ -19,7 +23,7 @@
         "git-tags",
         "helm"
       ],
-      "groupName": "Anchore Enterprise Dependencies",
+      "groupName": "Anchore",
       "postUpgradeTasks": {
         "commands": [
           "bump-chart-yaml",
@@ -42,14 +46,20 @@
         "registry1.dso.mil/bigbang/maintained/redis"
       ],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
+    },
+    {
+      "matchManagers": [
+        "helmv3"
+      ],
+      "matchFileNames": [
+        "chart/deps/postgresql/**"
+      ],
+      "enabled": false
     }
   ],
   "separateMajorMinor": false,
   "postUpdateOptions": [
     "helmUpdateSubChartArchives"
-  ],
-  "ignorePaths": [
-    "chart/deps/postgresql/**"
   ],
   "customManagers": [
     {
@@ -145,6 +155,32 @@
         "\\s*(?<depName>.+):(?<currentValue>.+)"
       ],
       "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": "Update postgresql image tag in deps/postgresql/values.yaml",
+      "managerFilePatterns": [
+        "/^chart/deps/postgresql/values\\.yaml$/"
+      ],
+      "matchStrings": [
+        "repository: ironbank/opensource/postgres/postgresql\\s+tag: (?<currentValue>.+)"
+      ],
+      "depNameTemplate": "registry1.dso.mil/ironbank/opensource/postgres/postgresql",
+      "datasourceTemplate": "docker",
+      "registryUrlTemplate": "https://registry1.dso.mil"
+    },
+    {
+      "customType": "regex",
+      "description": "Update postgresql appVersion in deps/postgresql/Chart.yaml",
+      "managerFilePatterns": [
+        "/^chart/deps/postgresql/Chart\\.yaml$/"
+      ],
+      "matchStrings": [
+        "appVersion:\\s+\"(?<currentValue>.+)\""
+      ],
+      "depNameTemplate": "registry1.dso.mil/ironbank/opensource/postgres/postgresql",
+      "datasourceTemplate": "docker",
+      "registryUrlTemplate": "https://registry1.dso.mil"
     }
   ]
 }
