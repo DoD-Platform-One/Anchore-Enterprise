@@ -69,9 +69,9 @@
         "/^chart/Chart\\.yaml$/"
       ],
       "matchStrings": [
-        "^version:\\s+(?<currentValue>.+)-bb\\.\\d+"
+        "name: anchore-enterprise\\nversion:\\s+(?<currentValue>.+)-bb\\.\\d+"
       ],
-      "autoReplaceStringTemplate": "version: {{{newValue}}}-bb.0",
+      "autoReplaceStringTemplate": "name: anchore-enterprise\nversion: {{{newValue}}}-bb.0",
       "depNameTemplate": "enterprise",
       "datasourceTemplate": "helm",
       "registryUrlTemplate": "https://charts.anchore.io"
