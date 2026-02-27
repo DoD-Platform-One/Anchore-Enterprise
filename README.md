@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # anchore-enterprise
 
-![Version: 3.20.2-bb.0](https://img.shields.io/badge/Version-3.20.2--bb.0-informational?style=flat-square) ![AppVersion: 5.24.0](https://img.shields.io/badge/AppVersion-5.24.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.21.0-bb.0](https://img.shields.io/badge/Version-3.21.0--bb.0-informational?style=flat-square) ![AppVersion: 5.24.2](https://img.shields.io/badge/AppVersion-5.24.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Anchore Enterprise is a complete container security workflow solution for professional teams. Easily integrating with CI/CD systems,
 it allows developers to bolster security without compromising velocity and enables security teams to audit and verify compliance in real-time.
@@ -147,7 +147,7 @@ helm install anchore-enterprise chart/
 | postgresql.primary.service.ports.postgresql | int | `5432` |  |
 | postgresql.image.registry | string | `"registry1.dso.mil"` |  |
 | postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql"` |  |
-| postgresql.image.tag | string | `"18.1"` |  |
+| postgresql.image.tag | string | `"18.2"` |  |
 | postgresql.global.imagePullSecrets[0] | string | `"private-registry"` |  |
 | postgresql.postgresqlConfiguration.listen_addresses | string | `"*"` |  |
 | postgresql.pgHbaConfiguration | string | `"local all all scram-sha-256\nhost all all all scram-sha-256"` |  |

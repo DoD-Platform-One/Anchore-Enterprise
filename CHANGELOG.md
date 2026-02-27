@@ -4,6 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [3.21.0-bb.0] (2026-02-24)
+### Changed
+- enterprise 3.20.2 -> 3.21.0
+- redis 24.1.0 -> 25.3.0
+- registry1.dso.mil/ironbank/anchore/enterprise/enterprise 5.24.0 -> 5.24.2
+- registry1.dso.mil/ironbank/bitnami/analytics/redis-exporter v1.80.1 -> v1.81.0
+- registry1.dso.mil/ironbank/opensource/postgres/postgresql 18.1 -> 18.2
+- registry1.dso.mil/ironbank/opensource/redis/redis8-slim 8.4.0 -> 8.6.1
+
 ## [3.20.2-bb.0] - 2026-02-18
 
 ### Changed

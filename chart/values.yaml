@@ -182,10 +182,10 @@ upstream:
   ui-redis:
     chartEnabled: false
 
-  image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.24.0
+  image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.24.2
   imagePullSecretName: private-registry
   kubectlImage: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34
-  migrationPodImage: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.1
+  migrationPodImage: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.2
   containerSecurityContext:
     capabilities:
       drop:
@@ -395,7 +395,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql
-    tag: "18.1"
+    tag: "18.2"
   global:
     imagePullSecrets:
       - private-registry
