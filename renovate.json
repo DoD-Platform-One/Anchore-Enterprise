@@ -79,60 +79,12 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^chart/values\\.yaml$/"
-      ],
-      "matchStrings": [
-        "image:\\s+registry1.dso.mil/ironbank/anchore/enterprise/enterprise:(?<currentValue>.+)"
-      ],
-      "depNameTemplate": "registry1.dso.mil/ironbank/anchore/enterprise/enterprise",
-      "datasourceTemplate": "docker",
-      "registryUrlTemplate": "https://registry1.dso.mil"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^chart/values\\.yaml$/"
-      ],
-      "matchStrings": [
-        "image:\\s+registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui:(?<currentValue>.+)"
-      ],
-      "depNameTemplate": "registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui",
-      "datasourceTemplate": "docker",
-      "registryUrlTemplate": "https://registry1.dso.mil"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^chart/values\\.yaml$/"
-      ],
-      "matchStrings": [
-        "image:\\s+registry1.dso.mil/ironbank/opensource/postgres/[^:]+:(?<currentValue>.+)"
-      ],
-      "depNameTemplate": "ironbank/opensource/postgres",
-      "datasourceTemplate": "docker",
-      "registryUrlTemplate": "https://registry1.dso.mil"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
         "/^chart/Chart\\.yaml$/"
       ],
       "matchStrings": [
-        "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)"
-      ],
-      "registryUrlTemplate": "https://registry1.dso.mil",
-      "depNameTemplate": "registry1.dso.mil/ironbank/anchore/enterprise/enterprise",
-      "datasourceTemplate": "docker"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^chart/Chart\\.yaml$/"
-      ],
-      "matchStrings": [
+        "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)",
         "- Enterprise:\\s+(?<currentValue>.+)"
       ],
-      "registryUrlTemplate": "https://registry1.dso.mil",
       "depNameTemplate": "registry1.dso.mil/ironbank/anchore/enterprise/enterprise",
       "datasourceTemplate": "docker"
     },
@@ -149,6 +101,16 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
+        "/^chart/values\\.yaml$/"
+      ],
+      "matchStrings": [
+        "(?:image|kubectlImage|migrationPodImage):\\s+(?<depName>[^\\s:]+):(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
         "/^tests/images\\.txt$/"
       ],
       "matchStrings": [
@@ -158,12 +120,13 @@
     },
     {
       "customType": "regex",
-      "description": "Update postgresql image tag in deps/postgresql/values.yaml",
+      "description": "Update postgresql image tag in values.yaml",
       "managerFilePatterns": [
+        "/^chart/values\\.yaml$/",
         "/^chart/deps/postgresql/values\\.yaml$/"
       ],
       "matchStrings": [
-        "repository: ironbank/opensource/postgres/postgresql\\s+tag: (?<currentValue>.+)"
+        "repository: ironbank/opensource/postgres/postgresql\\s+tag: \"?(?<currentValue>[^\"\\s]+)"
       ],
       "depNameTemplate": "registry1.dso.mil/ironbank/opensource/postgres/postgresql",
       "datasourceTemplate": "docker",
