@@ -3,8 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [3.21.0-bb.1] (2026-03-05)
+
+### Changed
+- migrated from bundled postgresql chart to upstream postgresql chart
+- registry1.dso.mil/ironbank/opensource/postgres/postgresql 18.2 -> 18.3
 
 ## [3.21.0-bb.0] (2026-02-24)
+
 ### Changed
 - enterprise 3.20.2 -> 3.21.0
 - redis 24.1.0 -> 25.3.0

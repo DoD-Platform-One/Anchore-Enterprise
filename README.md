@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # anchore-enterprise
 
-![Version: 3.21.0-bb.0](https://img.shields.io/badge/Version-3.21.0--bb.0-informational?style=flat-square) ![AppVersion: 5.24.2](https://img.shields.io/badge/AppVersion-5.24.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.21.0-bb.1](https://img.shields.io/badge/Version-3.21.0--bb.1-informational?style=flat-square) ![AppVersion: 5.24.2](https://img.shields.io/badge/AppVersion-5.24.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Anchore Enterprise is a complete container security workflow solution for professional teams. Easily integrating with CI/CD systems,
 it allows developers to bolster security without compromising velocity and enables security teams to audit and verify compliance in real-time.
@@ -131,45 +131,31 @@ helm install anchore-enterprise chart/
 | ui-redis.cleanUpgrade.enabled | bool | `false` |  |
 | ui-redis.cleanUpgrade.redisLabel | string | `"app.kubernetes.io/name: ui-redis"` |  |
 | postgresql.enabled | bool | `true` |  |
-| postgresql.externalDBCheckEnabled | bool | `false` |  |
-| postgresql.primary.podSecurityContext.enabled | bool | `true` |  |
-| postgresql.primary.podSecurityContext.fsGroup | int | `1001` |  |
-| postgresql.primary.podSecurityContext.runAsUser | int | `1001` |  |
-| postgresql.primary.podSecurityContext.runAsGroup | int | `1001` |  |
-| postgresql.primary.containerSecurityContext.enabled | bool | `true` |  |
-| postgresql.primary.containerSecurityContext.runAsUser | int | `1001` |  |
-| postgresql.primary.containerSecurityContext.runAsGroup | int | `1001` |  |
-| postgresql.primary.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| postgresql.primary.persistence.resourcePolicy | string | `"keep"` |  |
-| postgresql.primary.persistence.subPath | string | `"data/pgdata"` |  |
-| postgresql.primary.persistence.mountPath | string | `"/var/lib/postgresql"` |  |
-| postgresql.primary.postgresqlDataDir | string | `"/var/lib/postgresql/data"` |  |
-| postgresql.primary.service.ports.postgresql | int | `5432` |  |
 | postgresql.image.registry | string | `"registry1.dso.mil"` |  |
 | postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql"` |  |
-| postgresql.image.tag | string | `"18.2"` |  |
-| postgresql.global.imagePullSecrets[0] | string | `"private-registry"` |  |
-| postgresql.postgresqlConfiguration.listen_addresses | string | `"*"` |  |
-| postgresql.pgHbaConfiguration | string | `"local all all scram-sha-256\nhost all all all scram-sha-256"` |  |
-| postgresql.postgresUser | string | `"anchore"` |  |
-| postgresql.postgresPassword | string | `"anchore-postgres,123"` |  |
-| postgresql.postgresDatabase | string | `"anchore"` |  |
-| postgresql.resources.limits.cpu | string | `"1000m"` |  |
-| postgresql.resources.limits.memory | string | `"4096Mi"` |  |
-| postgresql.resources.requests.cpu | string | `"1000m"` |  |
-| postgresql.resources.requests.memory | string | `"4096Mi"` |  |
+| postgresql.image.tag | string | `"18.3"` |  |
+| postgresql.global.security.allowInsecureImages | bool | `true` |  |
+| postgresql.global.postgresql.auth.username | string | `"anchore"` | PostgreSQL User to create |
+| postgresql.global.postgresql.auth.password | string | `"anchore-postgres,123"` | PostgreSQL Password for the new user |
+| postgresql.global.postgresql.auth.database | string | `"anchore"` | PostgreSQL Database to create |
+| postgresql.global.postgresql.auth.secretKeys.userPasswordKey | string | `"postgresql-password"` |  |
+| postgresql.global.postgresql.auth.secretKeys.adminPasswordKey | string | `"postgresql-postgres-password"` |  |
+| postgresql.primary.networkPolicy.enabled | bool | `false` |  |
+| postgresql.primary.persistence.mountPath | string | `"/var/lib/postgresql"` |  |
+| postgresql.primary.extraVolumes[0].name | string | `"run-postgresql"` |  |
+| postgresql.primary.extraVolumes[0].emptyDir | object | `{}` |  |
+| postgresql.primary.extraVolumeMounts[0].name | string | `"run-postgresql"` |  |
+| postgresql.primary.extraVolumeMounts[0].mountPath | string | `"/run/postgresql"` |  |
+| postgresql.primary.resources.limits.cpu | string | `"1000m"` |  |
+| postgresql.primary.resources.limits.memory | string | `"4096Mi"` |  |
+| postgresql.primary.resources.requests.cpu | string | `"1000m"` |  |
+| postgresql.primary.resources.requests.memory | string | `"4096Mi"` |  |
 | postgresql.metrics.resources.limits.cpu | string | `"200m"` |  |
 | postgresql.metrics.resources.limits.memory | string | `"256Mi"` |  |
 | postgresql.metrics.resources.requests.cpu | string | `"200m"` |  |
 | postgresql.metrics.resources.requests.memory | string | `"256Mi"` |  |
-| postgresql.securityContext.enabled | bool | `true` |  |
-| postgresql.securityContext.fsGroup | int | `1001` |  |
-| postgresql.securityContext.runAsUser | int | `1001` |  |
-| postgresql.securityContext.runAsGroup | int | `1001` |  |
-| postgresql.containerSecurityContext.enabled | bool | `true` |  |
-| postgresql.containerSecurityContext.runAsUser | int | `1001` |  |
-| postgresql.containerSecurityContext.runAsGroup | int | `1001` |  |
-| postgresql.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| postgresql.postgresqlDataDir | string | `"/var/lib/postgresql/pgdata/data"` |  |
+| postgresql.volumePermissions.enabled | bool | `false` |  |
 | postgresqlSuperUser.postgresUsername | string | `""` |  |
 | postgresqlSuperUser.postgresPassword | string | `""` |  |
 | postgresqlSuperUser.existingSecret | string | `nil` |  |
