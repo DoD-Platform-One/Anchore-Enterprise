@@ -1,5 +1,5 @@
 name: anchore-enterprise
-version: 3.21.0-bb.0
+version: 3.21.0-bb.1
 apiVersion: v2
 appVersion: 5.24.2
 kubeVersion: "1.23.x - 1.34.x || 1.23.x-x - 1.34.x-x"
@@ -34,8 +34,8 @@ dependencies:
     alias: upstream
     repository: "https://charts.anchore.io"
   - name: postgresql
-    version: "12.5.9"
-    repository: "file://./deps/postgresql"
+    version: 18.5.1
+    repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: redis
     version: 25.3.0-bb.0
@@ -64,7 +64,7 @@ annotations:
       image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.24.2
     - name: postgresql
       condition: postgresql.enabled
-      image: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.2
+      image: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.3
     - name: enterpriseui
       image: registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui:5.24.0
     - name: kubectl

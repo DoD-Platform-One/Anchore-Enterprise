@@ -46,15 +46,6 @@
         "registry1.dso.mil/bigbang/maintained/redis"
       ],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
-    },
-    {
-      "matchManagers": [
-        "helmv3"
-      ],
-      "matchFileNames": [
-        "chart/deps/postgresql/**"
-      ],
-      "enabled": false
     }
   ],
   "separateMajorMinor": false,
@@ -122,24 +113,10 @@
       "customType": "regex",
       "description": "Update postgresql image tag in values.yaml",
       "managerFilePatterns": [
-        "/^chart/values\\.yaml$/",
-        "/^chart/deps/postgresql/values\\.yaml$/"
+        "/^chart/values\\.yaml$/"
       ],
       "matchStrings": [
         "repository: ironbank/opensource/postgres/postgresql\\s+tag: \"?(?<currentValue>[^\"\\s]+)"
-      ],
-      "depNameTemplate": "registry1.dso.mil/ironbank/opensource/postgres/postgresql",
-      "datasourceTemplate": "docker",
-      "registryUrlTemplate": "https://registry1.dso.mil"
-    },
-    {
-      "customType": "regex",
-      "description": "Update postgresql appVersion in deps/postgresql/Chart.yaml",
-      "managerFilePatterns": [
-        "/^chart/deps/postgresql/Chart\\.yaml$/"
-      ],
-      "matchStrings": [
-        "appVersion:\\s+\"(?<currentValue>.+)\""
       ],
       "depNameTemplate": "registry1.dso.mil/ironbank/opensource/postgres/postgresql",
       "datasourceTemplate": "docker",
