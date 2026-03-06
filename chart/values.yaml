@@ -396,10 +396,6 @@ postgresql:
         password: anchore-postgres,123
         # -- PostgreSQL Database to create
         database: anchore
-        # These secret keys overrides are required for migrating from the old chart that was bundled in the "deps" folder to the new upstream chart.
-        secretKeys:
-          userPasswordKey: postgresql-password
-          adminPasswordKey: postgresql-postgres-password
   primary:
     networkPolicy:
       enabled: false

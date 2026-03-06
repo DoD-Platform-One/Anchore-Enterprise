@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # anchore-enterprise
 
-![Version: 3.21.0-bb.1](https://img.shields.io/badge/Version-3.21.0--bb.1-informational?style=flat-square) ![AppVersion: 5.24.2](https://img.shields.io/badge/AppVersion-5.24.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.21.0-bb.2](https://img.shields.io/badge/Version-3.21.0--bb.2-informational?style=flat-square) ![AppVersion: 5.24.2](https://img.shields.io/badge/AppVersion-5.24.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Anchore Enterprise is a complete container security workflow solution for professional teams. Easily integrating with CI/CD systems,
 it allows developers to bolster security without compromising velocity and enables security teams to audit and verify compliance in real-time.
@@ -138,8 +138,6 @@ helm install anchore-enterprise chart/
 | postgresql.global.postgresql.auth.username | string | `"anchore"` | PostgreSQL User to create |
 | postgresql.global.postgresql.auth.password | string | `"anchore-postgres,123"` | PostgreSQL Password for the new user |
 | postgresql.global.postgresql.auth.database | string | `"anchore"` | PostgreSQL Database to create |
-| postgresql.global.postgresql.auth.secretKeys.userPasswordKey | string | `"postgresql-password"` |  |
-| postgresql.global.postgresql.auth.secretKeys.adminPasswordKey | string | `"postgresql-postgres-password"` |  |
 | postgresql.primary.networkPolicy.enabled | bool | `false` |  |
 | postgresql.primary.persistence.mountPath | string | `"/var/lib/postgresql"` |  |
 | postgresql.primary.extraVolumes[0].name | string | `"run-postgresql"` |  |
