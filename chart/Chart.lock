@@ -1,15 +1,15 @@
 dependencies:
 - name: enterprise
   repository: https://charts.anchore.io
-  version: 3.21.0
+  version: 3.21.1
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 18.5.1
+  version: 18.5.6
 - name: redis
   repository: oci://registry1.dso.mil/bigbang/maintained
-  version: 25.3.0-bb.0
+  version: 25.3.2-bb.0
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
   version: 0.9.8
-digest: sha256:8d5f3cb1bf513fcabe341da29a9152bc58e7b2d11339571c69cda4cff65e9704
-generated: "2026-03-04T08:07:26.445047-05:00"
+digest: sha256:03d540d6f641824188e40dc7944cbed2aeb5deb43ef40e574f89ed33d4b43365
+generated: "2026-03-13T08:16:45.111095-04:00"

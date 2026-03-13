@@ -1,7 +1,7 @@
 name: anchore-enterprise
-version: 3.21.0-bb.3
+version: 3.21.1-bb.0
 apiVersion: v2
-appVersion: 5.24.2
+appVersion: 5.25.0
 kubeVersion: ">= 1.23.0"
 description: |
   Anchore Enterprise is a complete container security workflow solution for professional teams. Easily integrating with CI/CD systems,
@@ -30,15 +30,15 @@ maintainers:
 icon: https://anchore.com/wp-content/uploads/2016/08/anchore.png
 dependencies:
   - name: enterprise
-    version: "3.21.0"
+    version: "3.21.1"
     alias: upstream
     repository: "https://charts.anchore.io"
   - name: postgresql
-    version: 18.5.1
+    version: 18.5.6
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: redis
-    version: 25.3.0-bb.0
+    version: 25.3.2-bb.0
     repository: "oci://registry1.dso.mil/bigbang/maintained"
     condition: ui-redis.enabled
     alias: ui-redis
@@ -48,7 +48,7 @@ dependencies:
 annotations:
   bigbang.dev/maintenanceTrack: bb_integrated
   bigbang.dev/applicationVersions: |
-    - Enterprise: 5.24.2
+    - Enterprise: 5.25.0
   bigbang.dev/upstreamReleaseNotesMarkdown: |
     - [Find our upstream chart's CHANGELOG here](https://github.com/anchore/anchore-charts/tree/main)
     - [and our upstream application release notes here](https://docs.anchore.com/current/docs/releasenotes/)
@@ -61,12 +61,12 @@ annotations:
       condition: ui-redis.enabled
       image: registry1.dso.mil/ironbank/bitnami/analytics/redis-exporter:v1.81.0
     - name: enterprise
-      image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.24.2
+      image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.25.0
     - name: postgresql
       condition: postgresql.enabled
       image: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.3
     - name: enterpriseui
-      image: registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui:5.24.0
+      image: registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui:5.25.0
     - name: kubectl
       image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34
 

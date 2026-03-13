@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [3.21.1-bb.0] (2026-03-13)
+### Changed
+- enterprise 3.21.0 -> 3.21.1
+- postgresql 18.5.1 -> 18.5.6
+- redis 25.3.0-bb.0 -> 25.3.2-bb.0
+- registry1.dso.mil/ironbank/anchore/enterprise/enterprise 5.24.2 -> 5.25.0
+- registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui 5.24.0 -> 5.25.0
+
 ## [3.21.0-bb.3] (2026-03-10)
 
 ### Changed

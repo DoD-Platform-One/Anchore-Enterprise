@@ -193,7 +193,7 @@ upstream:
         ports:
           postgresql: 5432
 
-  image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.24.2
+  image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.25.0
   imagePullSecretName: private-registry
   kubectlImage: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34
   migrationPodImage: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.3
@@ -319,7 +319,7 @@ upstream:
   #################################
   ui:
     enabled: true
-    image: registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui:5.24.0
+    image: registry1.dso.mil/ironbank/anchore/enterpriseui/enterpriseui:5.25.0
     imagePullSecretName: private-registry
     service:
       port: 3000
