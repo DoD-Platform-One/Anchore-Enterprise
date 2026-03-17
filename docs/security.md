@@ -22,7 +22,7 @@ The Identity Provider must:
 - Allow unsigned client requests from Anchore
 - Allow unencrypted requests and responses
 
-Click the [link](https://docs.anchore.com/current/docs/overview/sso/) for more Anchore security information.
+Click the [link](https://docs.anchore.com/current/docs/configuration/user_authentication/sso/) for more Anchore security information.
 
 ## Note on FIPS
 

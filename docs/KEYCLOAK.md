@@ -18,7 +18,7 @@ Keycloak is configured with a working Realm including Groups and Users.
 
 You will first need to set up the Keycloak client that can be used by Anchore.
 
-[See here for an example.](https://docs.anchore.com/current/docs/overview/sso/examples/keycloak/)
+[See here for an example.](https://docs.anchore.com/current/docs/configuration/user_authentication/sso/mapping/keycloak/)
 
 ### Anchore Configuration
 
@@ -74,6 +74,6 @@ kubectl delete pods -l component=api -n anchore
 
 [Anchore SSO Reference](https://anchore.com/blog/feature-series-anchore-enterprise-2-1-sso/) - This includes the process to set up Keycloak integration manually. Our Helm chart automates this process through API calls.
 
-[Anchore SSO Mapping](https://docs.anchore.com/current/docs/overview/sso/mapping/) - This doc discusses how users are mapped from an SSO into Anchore's users/priveleges.
+[Anchore SSO Mapping](https://docs.anchore.com/current/docs/configuration/user_authentication/sso/mapping/) - This doc discusses how users are mapped from an SSO into Anchore's users/priveleges.
 
-[Anchore + Keycloak Example](https://docs.anchore.com/current/docs/overview/sso/examples/keycloak/) - An example from Anchore of how to set up the Keycloak client.
+[Anchore + Keycloak Example](https://docs.anchore.com/current/docs/configuration/user_authentication/sso/mapping/keycloak/) - An example from Anchore of how to set up the Keycloak client.

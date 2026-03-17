@@ -4,79 +4,222 @@
 ###################################################
 domain: dev.bigbang.mil
 
+routes:
+  inbound:
+    anchore-api:
+      enabled: true
+      selector:
+        app.kubernetes.io/component: api
+      gateways:
+        - istio-gateway/public-ingressgateway
+      hosts:
+        - anchore-api.{{ .Values.domain }}
+      http:
+        # Disable ability to hit metrics on virtual service
+        - match:
+            - uri:
+                prefix: /metrics
+          route:
+            - destination:
+                host: anchore-enterprise-anchore-enterprise-api.anchore.svc.cluster.local
+                port:
+                  number: 8228
+          fault:
+            abort:
+              percentage:
+                value: 100
+              httpStatus: 403
+        # Default route for everything else
+        - match:
+            - uri:
+                prefix: /
+          route:
+            - destination:
+                host: anchore-enterprise-anchore-enterprise-api.anchore.svc.cluster.local
+                port:
+                  number: 8228
+    anchore-ui:
+      enabled: true
+      selector:
+        app.kubernetes.io/component: ui
+      gateways:
+        - istio-gateway/public-ingressgateway
+      hosts:
+        - anchore.{{ .Values.domain }}
+      service: anchore-enterprise-anchore-enterprise-ui.anchore.svc.cluster.local
+      port: 3000
+  outbound:
+    anchore-data-service:
+      enabled: true
+      hosts:
+      - data.anchore-enterprise.com
+
 istio:
-  # Toggle istio integration
   enabled: false
-  hardened:
+
+  sidecar:
     enabled: false
     outboundTrafficPolicyMode: "REGISTRY_ONLY"
-    customServiceEntries: []
-      # - name: "allow-google"
-      #   enabled: true
-      #   spec:
-      #     exportTo:
-      #       - "."
-      #     hosts:
-      #       - google.com
-      #     location: MESH_EXTERNAL
-      #     ports:
-      #       - number: 443
-      #         protocol: TLS
-      #         name: https
-      #     resolution: DNS
-    customAuthorizationPolicies: []
-    # - name: "allow-nothing"
-    #   enabled: true
-    #   spec: {}
-  injection: "disabled"
-  ui:
-    # Toggle vs creation
-    enabled: true
-    annotations: {}
-    labels: {}
-    gateways:
-      - istio-system/main
-    hosts:
-      - "anchore.{{ .Values.domain }}"
-  api:
-    # Toggle vs creation
-    enabled: true
-    annotations: {}
-    labels: {}
-    gateways:
-      - istio-system/main
-    hosts:
-      - "anchore-api.{{ .Values.domain }}"
-    service:
-      apiVersion: v2
 
-  # -- Default peer authentication
+  serviceEntries:
+    custom: []
+
+  authorizationPolicies:
+    enabled: false
+    custom: []
+
+  # Default peer authentication
   mtls:
-    # -- STRICT = Allow only mutual TLS traffic,
+    # STRICT = Allow only mutual TLS traffic
     # PERMISSIVE = Allow both plain text and mutual TLS traffic
     mode: STRICT
 
 networkPolicies:
   enabled: false
-  ingressLabels:
-    app: istio-ingressgateway
-    istio: ingressgateway
+  ingress:
+    to:
+      catalog:8082:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: catalog
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+      simplequeue:8083:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: simplequeue
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+      analyzer:8084:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: analyzer
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+      policy:8087:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: policyengine
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+      api:8228:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: api
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+      reports:8558:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: reports
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+      notifications:8668:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: notifications
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+      ui-redis:9121:
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+  egress:
+    definitions:
+      anchore-data-service:
+        to:
+          - ipBlock:
+              cidr: 0.0.0.0/0
+        ports:
+          - port: 443
+            protocol: TCP
+      ldap-subnets:
+        to:
+          - ipBlock:
+              cidr: 192.168.0.0/16
+          - ipBlock:
+              cidr: 172.16.0.0/12
+          - ipBlock:
+              cidr: 10.0.0.0/8
+        ports:
+          - port: 636
+            protocol: TCP
+      notification-services:
+        to:
+          - ipBlock:
+              cidr: 0.0.0.0/0
+      redis-subnets:
+        to:
+          - ipBlock:
+              cidr: 192.168.0.0/16
+          - ipBlock:
+              cidr: 172.16.0.0/12
+          - ipBlock:
+              cidr: 10.0.0.0/8
+        ports:
+          - port: 6379
+            protocol: TCP
+      registry-subnets:
+        to:
+          - ipBlock:
+              cidr: 0.0.0.0/0
+    from:
+      "*":
+        to:
+          k8s:
+            tempo/tempo:9411: false
+      analyzer:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: analyzer
+        to:
+          definition:
+            registry-subnets: true
+      api:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: api
+        to:
+          definition:
+            redis-subnets: false
+            notification-services: true
+      catalog:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: catalog
+        to:
+          definition:
+            registry-subnets: true
+      datasyncer:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: datasyncer
+        to:
+          definition:
+            anchore-data-service: true
+      notifications:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: notifications
+        to:
+          definition:
+            notification-services: true
+      ui:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: ui
+        to:
+          definition:
+            ldap-subnets: true
+            redis-subnets: false
   additionalPolicies: []
-  # This is a dev example policy spec and CIDR 0.0.0.0/0 is unsafe for operational environments
-  # requests to controlPlane should also be blocked in an operational policy
-  # - name: sample-anchore-policy
-  #   spec:
-  #     podSelector: {}
-  #     policyTypes:
-  #     - Egress
-  #     egress:
-  #     - to:
-  #       - ipBlock:
-  #           cidr: 0.0.0.0/0
-  #           except:
-  #           # Block requests to AWS cloud metadata IP
-  #           - 169.254.169.254/32
-
 
 # Enable/disable Keycloak SSO integration
 # If enabled, also enable OAuth - global.oauthEnabled
