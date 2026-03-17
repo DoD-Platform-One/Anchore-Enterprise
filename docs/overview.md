@@ -30,7 +30,7 @@ pipeline with a [Jenkins Plugin](https://plugins.jenkins.io/anchore-container-sc
 ## Quick Start
 
 - [Docker Compose File](https://docs.anchore.com/current/docs/quickstart/docker-compose.yaml)
-- [Prometheus Configuration for Monitoring](https://docs.anchore.com/current/docs/quickstart/anchore-prometheus.yml)
+- [Prometheus Configuration for Monitoring](https://docs.anchore.com/current/docs/monitoring/prometheus/)
   - [Enabling Prometheus](https://docs.anchore.com/current/docs/quickstart/#optional-enabling-prometheus-monitoring)
 - [Swagger UI Nginx Proxy](https://docs.anchore.com/current/docs/quickstart/anchore-swaggerui-nginx.conf)
   - [Enabling Swagger](https://docs.anchore.com/current/docs/quickstart/#optional-enabling-swagger-ui)
