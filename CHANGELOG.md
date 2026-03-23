@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [3.21.3-bb.0] (2026-03-18)
+### Changed
+- enterprise 3.21.1 -> 3.21.3
+- postgresql 18.5.6 -> 18.5.7
+- registry1.dso.mil/ironbank/anchore/enterprise/enterprise 5.25.0 -> 5.25.1
+
 ## [3.21.1-bb.2] (2026-03-19)
 ### Changed
 - allow wildcard patch and pre-release versions for kubeversion
