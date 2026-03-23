@@ -1,7 +1,7 @@
 name: anchore-enterprise
-version: 3.21.1-bb.2
+version: 3.21.3-bb.0
 apiVersion: v2
-appVersion: 5.25.0
+appVersion: 5.25.1
 kubeVersion: ">= 1.23.x-x"
 description: |
   Anchore Enterprise is a complete container security workflow solution for professional teams. Easily integrating with CI/CD systems,
@@ -30,11 +30,11 @@ maintainers:
 icon: https://anchore.com/wp-content/uploads/2016/08/anchore.png
 dependencies:
   - name: enterprise
-    version: "3.21.1"
+    version: "3.21.3"
     alias: upstream
     repository: "https://charts.anchore.io"
   - name: postgresql
-    version: 18.5.6
+    version: 18.5.7
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: redis
@@ -51,7 +51,7 @@ dependencies:
 annotations:
   bigbang.dev/maintenanceTrack: bb_integrated
   bigbang.dev/applicationVersions: |
-    - Enterprise: 5.25.0
+    - Enterprise: 5.25.1
   bigbang.dev/upstreamReleaseNotesMarkdown: |
     - [Find our upstream chart's CHANGELOG here](https://github.com/anchore/anchore-charts/tree/main)
     - [and our upstream application release notes here](https://docs.anchore.com/current/docs/releasenotes/)
@@ -64,7 +64,7 @@ annotations:
       condition: ui-redis.enabled
       image: registry1.dso.mil/ironbank/bitnami/analytics/redis-exporter:v1.81.0
     - name: enterprise
-      image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.25.0
+      image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.25.1
     - name: postgresql
       condition: postgresql.enabled
       image: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.3

@@ -211,6 +211,13 @@ networkPolicies:
         to:
           definition:
             notification-services: true
+      smoketest:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: smoketest
+        to:
+          definition:
+            registry-subnets: true
       ui:
         podSelector:
           matchLabels:
@@ -336,7 +343,7 @@ upstream:
         ports:
           postgresql: 5432
 
-  image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.25.0
+  image: registry1.dso.mil/ironbank/anchore/enterprise/enterprise:5.25.1
   imagePullSecretName: private-registry
   kubectlImage: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34
   migrationPodImage: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.3
